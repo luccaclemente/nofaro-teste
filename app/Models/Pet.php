@@ -8,6 +8,7 @@ class Pet extends BaseModel
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'specieId'];
     /**
      * Describe this table's relation with Appointment.
      *
