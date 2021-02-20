@@ -6,15 +6,21 @@ Run [Composer](https://getcomposer.org/ "Composer") from the command line to ins
 composer install
 ```
 ### Configuration file
-Additionally to submodules and Composer, a `.env` file must be created and properly setup. It can be created via [Artisan](https://laravel.com/docs/5.8/artisan "Artisan Console") by running the following commands:
-```bash
-php artisan env:gen
-```
-Afterwards, run the command below to set the _application key_:
+Rename the file `.env.exampe` to `.env`. Afterwards, run the command below to set the _application key_:
 ```bash
 php artisan key:gen
 ```
 Don&apos;t forget to setup `DB_USERNAME` and `DB_PASSWORD` in the newly created `.env` file.
+
+### Database Setup
+Now, you will have to own a local MySQL Database named `nofaro`. Besides that, run the following commands:
+```bash
+php artisan migrate
+```
+And:
+```bash
+php artisan db:seed --class=SpeciesTableSeeder
+```
 
 ## Running the application
 In order to run this application you may run the following commands:

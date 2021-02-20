@@ -5,6 +5,7 @@
 /resources/docs/groups
 /resources/docs/authentication.md
 /resources/docs/index.md
+/resources/docs/.filemtimes
 /storage/*.key
 /vendor
 .env
