@@ -11,7 +11,7 @@ class PetController extends Controller
 {
     public function index()
     {
-        return Pet::all();
+        return Pet::paginate();
     }
 
     public function show($id)
