@@ -7,23 +7,57 @@ use Illuminate\Support\Facades\Validator as IlluminateValidator;
 use App\Models\Pet;
 use App\Models\Specie;
 use \DB;
+
+/**
+ * @group Pet management
+ *
+ * This endpoint allows you to manage pet registrations
+ */
 class PetController extends Controller
 {
+    /**
+     * List pets
+     *
+     * This function returns a paginated list of pets without its appointments.
+     * The standard amount per page is two pets
+     *
+     * @urlParam name When filled filters the results by the pets name
+     * @urlParam page integer Page to be displayed. Defaults to 1
+     *
+     */
     public function index(Request $request)
     {
         if($request->has('name')) {
-            return Pet::where('name', 'like', '%'.$request->input('name').'%')->paginate();
+            return Pet::where('name', 'like', '%'.$request->input('name').'%')->simplePaginate();
         }
 
-        return Pet::paginate();
+        return Pet::simplePaginate();
     }
 
+    /**
+     * Show pet
+     *
+     * This route returns a full detailed list of informations of the given pet
+     *
+     * @urlParam id integer required The pet id that are requested
+     *
+     */
     public function show($id)
     {
-        return Pet::with('appointments')
-            ->find($id);
+        return Pet::findOrFail($id)
+            ->with('appointments');
     }
 
+
+    /**
+     * Register pet
+     *
+     * This route can be used to register new pets on the database
+     *
+     * @bodyParam name string required The pet name. It must have at leats 2 characters.
+     * @bodyParam specie string required The pet specie. It must have value 'C' (Cachorro) or 'G' (Gato).
+     *
+     */
     public function store(Request $request)
     {
         $validation = IlluminateValidator::make($request->all(), $this->getValidationRules());
@@ -38,7 +72,16 @@ class PetController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update pet information
+     *
+     * This route can be used to update an existent pet information
+     *
+     * @bodyParam name string required The pet name. It must have at leats 2 characters.
+     * @bodyParam specie string required The pet specie. It must have value 'C' (Cachorro) or 'G' (Gato).
+     *
+     */
+    public function update(Request $request, int $id)
     {
         $validation = IlluminateValidator::make($request->all(), $this->getValidationRules());
 
@@ -55,7 +98,15 @@ class PetController extends Controller
         return $pet;
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Remove pet
+     *
+     * This route can be used to delete all pet and its appointments information
+     *
+     * @urlParam id integer required The pet id that must have all its information deleted
+     *
+     */
+    public function delete(Request $request, int $id)
     {
         $pet = Pet::findOrFail($id);
         $pet->delete();

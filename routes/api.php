@@ -6,14 +6,14 @@ Route::group([
     'prefix' => 'pet',
 ], function () {
     Route::get('/', 'App\Http\Controllers\PetController@index');
-    Route::get('/{pet}', 'App\Http\Controllers\PetController@show');
+    Route::get('/{id}', 'App\Http\Controllers\PetController@show');
     Route::post('/', 'App\Http\Controllers\PetController@store');
-    Route::put('/{pet}', 'App\Http\Controllers\PetController@update');
-    Route::delete('/{pet}', 'App\Http\Controllers\PetController@delete');
+    Route::put('/{id}', 'App\Http\Controllers\PetController@update');
+    Route::delete('/{id}', 'App\Http\Controllers\PetController@delete');
 });
 
 Route::group([
     'prefix' => 'appointment',
 ], function() {
-    Route::post('/{pet}', 'App\Http\Controllers\AppointmentController@store');
+    Route::post('/{id}', 'App\Http\Controllers\AppointmentController@store');
 });

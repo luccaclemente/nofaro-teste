@@ -6,6 +6,11 @@ use App\Models\Appointment;
 use Illuminate\Support\Facades\Validator as IlluminateValidator;
 use Illuminate\Http\Request;
 
+/**
+ * @group Appointment management
+ *
+ * This endpoint allows you to register pets appointments
+ */
 class AppointmentController extends Controller
 {
     public function store(Request $request, int $petId)
