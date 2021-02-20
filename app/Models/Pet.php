@@ -9,6 +9,11 @@ class Pet extends BaseModel
     use HasFactory;
 
     protected $fillable = ['name', 'specieId'];
+
+    protected $primaryKey = 'petId';
+
+    protected $perPage = 1;
+
     /**
      * Describe this table's relation with Appointment.
      *

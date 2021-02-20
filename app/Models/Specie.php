@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Specie extends BaseModel
 {
     use HasFactory;
+
+    protected $primaryKey = 'specieId';
 }

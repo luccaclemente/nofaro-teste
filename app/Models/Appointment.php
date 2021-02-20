@@ -8,6 +8,8 @@ class Appointment extends BaseModel
 {
     use HasFactory;
 
+    protected $fillable = ['petId', 'description', 'created_at'];
+    protected $primaryKey = 'appointmentId';
     /**
      * Describe this table's relation with Pet.
      *

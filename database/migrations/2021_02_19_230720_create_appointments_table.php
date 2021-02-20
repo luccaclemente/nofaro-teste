@@ -14,7 +14,7 @@ class CreateAppointmentsTable extends Migration
     public function up()
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->id();
+            $table->id('appointmentId');
             $table->unsignedBigInteger('petId');
             $table->text('description');
             $table->date('created_at');
