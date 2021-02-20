@@ -1,6 +1,10 @@
 /node_modules
 /public/hot
 /public/storage
+/public/docs
+/resources/docs/groups
+/resources/docs/authentication.md
+/resources/docs/index.md
 /storage/*.key
 /vendor
 .env
