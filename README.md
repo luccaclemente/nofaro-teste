@@ -29,3 +29,7 @@ php artisan serve
 
 ### Documentation
 In order to check all endpoints available on the API, click <a href="http:localhost:8000/docs/">here</a>
+
+## Doubts
+
+If are there any doubts, contact me by e-mail on <a href="mailto:luccacdasilva@gmail.com">luccacdasilva@gmail.com</a>
