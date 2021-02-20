@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator as IlluminateValidator;
 use App\Models\Pet;
 
 class PetController extends Controller
@@ -19,6 +20,15 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
+        $validation = IlluminateValidator::make($request->all(), [
+            'name' => 'required|min:2',
+            'specie' => 'required|exists:species,shortDescription',
+        ]);
+
+        if ($validation->fails()) {
+            return $this->badRequest($validation->messages());
+        }
+
         return Pet::create($request->all());
     }
 
