@@ -17,7 +17,11 @@ class CreatePetsTable extends Migration
             $table->id('petId');
             $table->string('name');
             $table->unsignedBigInteger('specieId');
-            $table->foreign('specieId')->references('specieId')->on('species');
+
+            $table->foreign('specieId')
+                ->references('specieId')
+                    ->on('species')
+                    ->onDelete('cascade');
         });
     }
 
