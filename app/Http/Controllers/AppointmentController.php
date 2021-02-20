@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, int $petId)
     {
         $validation = IlluminateValidator::make($request->all(), [
             'date' => 'required|date_format:Y-m-d',
@@ -19,6 +19,10 @@ class AppointmentController extends Controller
             return $this->badRequest($validation->messages());
         }
 
-        return Appointment::create($request->all());
+        return Appointment::create([
+            'petId' => $petId,
+            'date' => $request->input('date'),
+            'description' => $request->input('description'),
+        ]);
     }
 }

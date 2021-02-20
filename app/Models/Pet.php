@@ -12,7 +12,7 @@ class Pet extends BaseModel
 
     protected $primaryKey = 'petId';
 
-    protected $perPage = 1;
+    protected $perPage = 2;
 
     /**
      * Describe this table's relation with Appointment.

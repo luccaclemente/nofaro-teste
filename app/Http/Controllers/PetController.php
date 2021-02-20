@@ -6,25 +6,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as IlluminateValidator;
 use App\Models\Pet;
 use App\Models\Specie;
-
+use \DB;
 class PetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->has('name')) {
+            return Pet::where('name', 'like', '%'.$request->input('name').'%')->paginate();
+        }
+
         return Pet::paginate();
     }
 
     public function show($id)
     {
-        return Pet::find($id);
+        return Pet::with('appointments')
+            ->find($id);
     }
 
     public function store(Request $request)
     {
-        $validation = IlluminateValidator::make($request->all(), [
-            'name' => 'required|min:2',
-            'specie' => 'required|exists:species,shortDescription',
-        ]);
+        $validation = IlluminateValidator::make($request->all(), $this->getValidationRules());
 
         if ($validation->fails()) {
             return $this->badRequest($validation->messages());
@@ -38,17 +40,33 @@ class PetController extends Controller
 
     public function update(Request $request, $id)
     {
-        $Pet = Pet::findOrFail($id);
-        $Pet->update($request->all());
+        $validation = IlluminateValidator::make($request->all(), $this->getValidationRules());
 
-        return $Pet;
+        if ($validation->fails()) {
+            return $this->badRequest($validation->messages());
+        }
+
+        $pet = Pet::findOrFail($id);
+        $pet->update([
+            'name' => $request->input('name'),
+            'specieId' => Specie::where('shortDescription', $request->input('specie'))->first()->specieId,
+        ]);
+
+        return $pet;
     }
 
     public function delete(Request $request, $id)
     {
-        $Pet = Pet::findOrFail($id);
-        $Pet->delete();
+        $pet = Pet::findOrFail($id);
+        $pet->delete();
 
-        return 204;
+        return $this->success();
+    }
+
+    private function getValidationRules() {
+        return [
+            'name' => 'required|min:2',
+            'specie' => 'required|exists:species,shortDescription',
+        ];
     }
 }

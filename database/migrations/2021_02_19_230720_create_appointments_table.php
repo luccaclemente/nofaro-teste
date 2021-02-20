@@ -17,7 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->id('appointmentId');
             $table->unsignedBigInteger('petId');
             $table->text('description');
-            $table->date('created_at');
+            $table->date('date');
 
             $table->foreign('petId')
                 ->references('petId')
